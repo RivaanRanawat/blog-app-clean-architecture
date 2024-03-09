@@ -12,13 +12,6 @@ final class AuthInitial extends AuthState {
   List<Object?> get props => const <Object?>[];
 }
 
-final class AuthLoading extends AuthState {
-  const AuthLoading();
-
-  @override
-  List<Object?> get props => const <Object?>[];
-}
-
 final class AuthSuccess extends AuthState {
   final UserModel user;
 
@@ -26,13 +19,4 @@ final class AuthSuccess extends AuthState {
 
   @override
   List<UserModel> get props => <UserModel>[user];
-}
-
-final class AuthFailure extends AuthState {
-  final String message;
-
-  const AuthFailure(this.message);
-
-  @override
-  List<String> get props => <String>[message];
 }

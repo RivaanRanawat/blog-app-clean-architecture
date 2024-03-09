@@ -6,11 +6,11 @@ part of 'supabase_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$supabaseHash() => r'4e4b1e52ace4117bf5a4e933f97a86225098e3a8';
+String _$supabaseHash() => r'af043d7687b97886012e5e7035fd4554ac0db9eb';
 
 /// See also [supabase].
 @ProviderFor(supabase)
-final supabaseProvider = FutureProvider<Supabase>.internal(
+final supabaseProvider = AutoDisposeProvider<Supabase>.internal(
   supabase,
   name: r'supabaseProvider',
   debugGetCreateSourceHash:
@@ -19,12 +19,12 @@ final supabaseProvider = FutureProvider<Supabase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef SupabaseRef = FutureProviderRef<Supabase>;
-String _$supabaseClientHash() => r'68d7758a64e85816f85eab1fcdd0c66354715654';
+typedef SupabaseRef = AutoDisposeProviderRef<Supabase>;
+String _$supabaseClientHash() => r'fe6a88c5074ff425e645b4cd72c615f9b41cd4fc';
 
 /// See also [supabaseClient].
 @ProviderFor(supabaseClient)
-final supabaseClientProvider = Provider<SupabaseClient>.internal(
+final supabaseClientProvider = AutoDisposeProvider<SupabaseClient>.internal(
   supabaseClient,
   name: r'supabaseClientProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -34,6 +34,6 @@ final supabaseClientProvider = Provider<SupabaseClient>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef SupabaseClientRef = ProviderRef<SupabaseClient>;
+typedef SupabaseClientRef = AutoDisposeProviderRef<SupabaseClient>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

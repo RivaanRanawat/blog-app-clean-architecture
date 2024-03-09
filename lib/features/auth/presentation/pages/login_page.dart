@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart'
-    show FutureOr, Raw;
 
 import '../../../../core/common/widgets/loader.dart';
+import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/context_ext.dart';
 import '../../../../core/theme/app_pallete.dart';
-import '../../../blog/presentation/pages/blog_page.dart';
 import '../notifiers/auth_notifier.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/auth_gradient_button.dart';
@@ -38,17 +36,19 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(15.0),
         child: Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            ref.listen(authNotifierProvider,
-                (Raw<FutureOr<AuthState>>? previous,
-                    Raw<FutureOr<AuthState>> next) {
-              if (next is AuthFailure) {
-                context.showSnackBar(next.message);
-              } else if (next is AuthSuccess) {
-                context.pushAndRemoveUntil(const BlogPage());
-              }
+            ref.listen(authNotifierProvider, (_, AsyncValue<AuthState> state) {
+              state.whenOrNull(
+                error: (Object error, StackTrace? stackTrace) {
+                  return switch (error) {
+                    Failure(:final String message) =>
+                      context.showSnackBar(message),
+                    _ => null,
+                  };
+                },
+              );
             });
             return switch (ref.watch(authNotifierProvider)) {
-              AuthLoading() => const Loader(),
+              AsyncLoading<AuthState>() => const Loader(),
               _ => Form(
                   key: formKey,
                   child: Column(

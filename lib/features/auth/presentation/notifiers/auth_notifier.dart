@@ -17,46 +17,53 @@ part 'auth_state.dart';
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
   @override
-  Raw<FutureOr<AuthState>> build() async {
-    final EitherFailure<UserModel> res =
+  FutureOr<AuthState> build() async {
+    final EitherFailure<UserModel> result =
         await ref.read(currentUserUseCaseProvider).call(NoParams());
-    return res.fold(
-      (Failure l) => const AuthInitial(),
-      (UserModel r) {
-        ref.read(appUserNotifierProvider.notifier).updateUser(r);
-        return AuthSuccess(r);
-      },
-    );
+    return result.fold((Failure l) => const AuthInitial(), (UserModel r) {
+      ref.read(appUserNotifierProvider.notifier).updateUser(r);
+      return AuthSuccess(r);
+    });
   }
 
+  @override
+  set state(AsyncValue<AuthState> value) {
+    /// We have overrident this method so that if the user is authenticated
+    /// we enter the details of the user into the appUserNotifierProvider
+    /// and rebuild the widget tree and redirect the user into the app
+    super.state = value.whenData((AuthState value) {
+      if (value is AuthSuccess) {
+        ref.read(appUserNotifierProvider.notifier).updateUser(value.user);
+      }
+      return value;
+    });
+  }
+
+  /// Create a new user and enter into the app
   Future<void> signUp({
     required String email,
     required String password,
     required String name,
   }) async {
-    state = Future<AuthState>.value(const AuthLoading());
-    final EitherFailure<UserModel> res = await ref
+    state = const AsyncLoading<AuthState>();
+    final EitherFailure<UserModel> result = await ref
         .read(userSignUpUseCaseProvider)
         .call(UserSignUpParams(email: email, password: password, name: name));
-    final AuthState updatedState = res.fold(
-      (Failure l) => AuthFailure(l.message),
-      AuthSuccess.new,
+    result.fold(
+      (Failure l) => state = AsyncError<AuthState>(l, StackTrace.current),
+      (UserModel user) => state = AsyncData<AuthState>(AuthSuccess(user)),
     );
-    state = Future<AuthState>.value(updatedState);
   }
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
-    state = Future<AuthState>.value(const AuthLoading());
-    final EitherFailure<UserModel> res = await ref
+  /// Login user into the app
+  Future<void> login({required String email, required String password}) async {
+    state = const AsyncLoading<AuthState>();
+    final EitherFailure<UserModel> result = await ref
         .read(userLoginUseCaseProvider)
         .call(UserLoginParams(email: email, password: password));
-    final AuthState updatedState = res.fold(
-      (Failure l) => AuthFailure(l.message),
-      AuthSuccess.new,
+    result.fold(
+      (Failure l) => state = AsyncError<AuthState>(l, StackTrace.current),
+      (UserModel user) => state = AsyncData<AuthState>(AuthSuccess(user)),
     );
-    state = Future<AuthState>.value(updatedState);
   }
 }

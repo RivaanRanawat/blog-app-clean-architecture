@@ -24,7 +24,8 @@ mixin _$BlogModel {
   List<String> get topics => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _dateFromJson)
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+  @JsonKey(
+      name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
   String? get posterName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $BlogModelCopyWith<$Res> {
       String imageUrl,
       List<String> topics,
       @JsonKey(fromJson: _dateFromJson) DateTime updatedAt,
-      @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+      @JsonKey(
+          name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
       String? posterName});
 }
 
@@ -124,7 +126,8 @@ abstract class _$$BlogModelImplCopyWith<$Res>
       String imageUrl,
       List<String> topics,
       @JsonKey(fromJson: _dateFromJson) DateTime updatedAt,
-      @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+      @JsonKey(
+          name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
       String? posterName});
 }
 
@@ -196,7 +199,8 @@ class _$BlogModelImpl extends _BlogModel {
       required this.imageUrl,
       final List<String> topics = const <String>[],
       @JsonKey(fromJson: _dateFromJson) required this.updatedAt,
-      @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+      @JsonKey(
+          name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
       this.posterName})
       : _topics = topics,
         super._();
@@ -224,7 +228,8 @@ class _$BlogModelImpl extends _BlogModel {
   @JsonKey(fromJson: _dateFromJson)
   final DateTime updatedAt;
   @override
-  @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+  @JsonKey(
+      name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
   final String? posterName;
 
   @override
@@ -279,7 +284,8 @@ abstract class _BlogModel extends BlogModel {
       required final String imageUrl,
       final List<String> topics,
       @JsonKey(fromJson: _dateFromJson) required final DateTime updatedAt,
-      @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+      @JsonKey(
+          name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
       final String? posterName}) = _$BlogModelImpl;
   const _BlogModel._() : super._();
 
@@ -299,7 +305,8 @@ abstract class _BlogModel extends BlogModel {
   @JsonKey(fromJson: _dateFromJson)
   DateTime get updatedAt;
   @override
-  @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+  @JsonKey(
+      name: 'profiles', fromJson: _posterNameFromJson, includeToJson: false)
   String? get posterName;
   @override
   @JsonKey(ignore: true)

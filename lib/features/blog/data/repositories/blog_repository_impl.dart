@@ -34,7 +34,7 @@ class BlogRepositoryImpl with ConnectionCheckerMixin implements BlogRepository {
     required String posterId,
     required List<String> topics,
   }) {
-    return validateConnection(() async {
+    return validateConnectivity(() async {
       try {
         final BlogModel blogModel = BlogModel(
           id: const Uuid().v1(),

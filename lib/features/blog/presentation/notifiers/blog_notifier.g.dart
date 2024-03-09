@@ -6,7 +6,7 @@ part of 'blog_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$blogNotifierHash() => r'04f0d93c7dd6dbbdd887bda9ebfc8740e287cba1';
+String _$blogNotifierHash() => r'fbb572de5a1d8e28941870c2bf571be3bae3aefb';
 
 /// See also [BlogNotifier].
 @ProviderFor(BlogNotifier)

@@ -32,7 +32,7 @@ class AuthRepositoryImpl with ConnectionCheckerMixin implements AuthRepository {
           UserModel(
             id: session.user.id,
             email: session.user.email ?? '',
-            name: '',
+            name: 'User',
           ),
         );
       }
@@ -40,7 +40,6 @@ class AuthRepositoryImpl with ConnectionCheckerMixin implements AuthRepository {
       if (user == null) {
         return left(Failure('User not logged in!'));
       }
-
       return right(user);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -76,7 +75,7 @@ class AuthRepositoryImpl with ConnectionCheckerMixin implements AuthRepository {
   }
 
   FutureEither<UserModel> _getUser(Future<UserModel> Function() fn) {
-    return validateConnection(() async {
+    return validateConnectivity(() async {
       try {
         final UserModel user = await fn();
         return right(user);

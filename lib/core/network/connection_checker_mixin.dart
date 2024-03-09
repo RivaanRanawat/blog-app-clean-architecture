@@ -14,7 +14,7 @@ abstract mixin class ConnectionCheckerMixin {
 
   /// Check if the device is connected to the internet using a functional
   /// approach
-  FutureEither<T> validateConnection<T>(FutureEither<T> Function() f) async {
+  FutureEither<T> validateConnectivity<T>(FutureEither<T> Function() f) async {
     if (!await isConnected()) {
       return left(Failure(Constants.noConnectionErrorMessage));
     }

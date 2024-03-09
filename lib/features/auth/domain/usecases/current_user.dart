@@ -6,10 +6,8 @@ import '../repository/auth_repository.dart';
 final class CurrentUser implements UseCase<UserModel, NoParams> {
   final AuthRepository authRepository;
 
-  CurrentUser(this.authRepository);
+  const CurrentUser(this.authRepository);
 
   @override
-  FutureEither<UserModel> call(NoParams params) async {
-    return authRepository.currentUser();
-  }
+  FutureEither<UserModel> call(NoParams params) => authRepository.currentUser();
 }

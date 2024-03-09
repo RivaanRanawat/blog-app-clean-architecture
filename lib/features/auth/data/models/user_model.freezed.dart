@@ -21,7 +21,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserModel {
   String get id => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_metadata', readValue: _nameReader)
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +36,10 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String id, String email, String name});
+  $Res call(
+      {String id,
+      String? email,
+      @JsonKey(name: 'user_metadata', readValue: _nameReader) String name});
 }
 
 /// @nodoc
@@ -52,7 +56,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @override
   $Res call({
     Object? id = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? name = null,
   }) {
     return _then(_value.copyWith(
@@ -60,10 +64,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -80,7 +84,10 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String email, String name});
+  $Res call(
+      {String id,
+      String? email,
+      @JsonKey(name: 'user_metadata', readValue: _nameReader) String name});
 }
 
 /// @nodoc
@@ -95,7 +102,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? name = null,
   }) {
     return _then(_$UserModelImpl(
@@ -103,10 +110,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -119,7 +126,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
-      {required this.id, required this.email, required this.name});
+      {required this.id,
+      this.email,
+      @JsonKey(name: 'user_metadata', readValue: _nameReader)
+      required this.name});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -127,8 +137,9 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String id;
   @override
-  final String email;
+  final String? email;
   @override
+  @JsonKey(name: 'user_metadata', readValue: _nameReader)
   final String name;
 
   @override
@@ -167,7 +178,8 @@ class _$UserModelImpl implements _UserModel {
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final String id,
-      required final String email,
+      final String? email,
+      @JsonKey(name: 'user_metadata', readValue: _nameReader)
       required final String name}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -176,8 +188,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get id;
   @override
-  String get email;
+  String? get email;
   @override
+  @JsonKey(name: 'user_metadata', readValue: _nameReader)
   String get name;
   @override
   @JsonKey(ignore: true)

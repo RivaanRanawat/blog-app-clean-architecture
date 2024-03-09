@@ -11,11 +11,12 @@ class UserLogin implements UseCase<UserModel, UserLoginParams> {
   const UserLogin(this.authRepository);
 
   @override
-  Future<Either<Failure, UserModel>> call(UserLoginParams params) =>
-      authRepository.loginWithEmailPassword(
-        email: params.email,
-        password: params.password,
-      );
+  Future<Either<Failure, UserModel>> call(UserLoginParams params) {
+    return authRepository.loginWithEmailPassword(
+      email: params.email,
+      password: params.password,
+    );
+  }
 }
 
 final class UserLoginParams extends Params {

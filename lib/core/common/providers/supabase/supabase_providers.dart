@@ -1,18 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../secrets/app_secrets.dart';
-
 part 'supabase_providers.g.dart';
 
-@Riverpod(keepAlive: true)
-Future<Supabase> supabase(SupabaseRef ref) {
-  return Supabase.initialize(
-    url: AppSecrets.supabaseUrl,
-    anonKey: AppSecrets.supabaseAnonKey,
-  );
-}
+@riverpod
+Supabase supabase(SupabaseRef ref) => throw UnimplementedError();
 
-@Riverpod(keepAlive: true)
+@riverpod
 SupabaseClient supabaseClient(SupabaseClientRef ref) =>
-    throw UnimplementedError();
+    ref.watch(supabaseProvider.select((Supabase value) => value.client));

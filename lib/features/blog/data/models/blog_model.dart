@@ -9,7 +9,7 @@ DateTime _dateFromJson(String? json) =>
 
 /// An external function to parse the poster name
 String? _posterNameFromJson(Map<String, dynamic>? json) =>
-    json?['profiles']['name'] as String?;
+    json?['name'] as String?;
 
 @Freezed(fromJson: false, toJson: false)
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
@@ -24,7 +24,11 @@ class BlogModel with _$BlogModel {
     required String imageUrl,
     @Default(<String>[]) List<String> topics,
     @JsonKey(fromJson: _dateFromJson) required DateTime updatedAt,
-    @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
+    @JsonKey(
+      name: 'profiles',
+      fromJson: _posterNameFromJson,
+      includeToJson: false,
+    )
     String? posterName,
   }) = _BlogModel;
 

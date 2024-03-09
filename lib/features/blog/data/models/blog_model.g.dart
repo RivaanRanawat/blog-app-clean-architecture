@@ -16,7 +16,7 @@ BlogModel _$BlogModelFromJson(Map<String, dynamic> json) => BlogModel(
           (json['topics'] as List<dynamic>).map((e) => e as String).toList(),
       updatedAt: _dateFromJson(json['updated_at'] as String?),
       posterName:
-          _posterNameFromJson(json['poster_name'] as Map<String, dynamic>?),
+          _posterNameFromJson(json['profiles'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$BlogModelToJson(BlogModel instance) => <String, dynamic>{

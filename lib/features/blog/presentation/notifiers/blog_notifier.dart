@@ -19,7 +19,7 @@ class BlogNotifier extends _$BlogNotifier {
   @override
   BlogState build() {
     fetchAllBlogs();
-    return const BlogInitial();
+    return const BlogLoading();
   }
 
   Future<void> uploadBlog({

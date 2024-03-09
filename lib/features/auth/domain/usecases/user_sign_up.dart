@@ -9,7 +9,7 @@ class UserSignUp implements UseCase<UserModel, UserSignUpParams> {
   const UserSignUp(this.authRepository);
 
   @override
-  FutureEither<UserModel> call(UserSignUpParams params) async {
+  FutureEither<UserModel> call(UserSignUpParams params) {
     return authRepository.signUpWithEmailPassword(
       name: params.name,
       email: params.email,
