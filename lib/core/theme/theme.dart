@@ -1,23 +1,30 @@
-import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
 
+import 'app_pallete.dart';
+
+@immutable
 class AppTheme {
-  static _border([Color color = AppPallete.borderColor]) => OutlineInputBorder(
-        borderSide: BorderSide(
-          color: color,
-          width: 3,
-        ),
+  const AppTheme._();
+
+  static OutlineInputBorder _border([Color color = AppPallete.borderColor]) =>
+      OutlineInputBorder(
+        borderSide: BorderSide(color: color, width: 3),
         borderRadius: BorderRadius.circular(10),
       );
-  static final darkThemeMode = ThemeData.dark().copyWith(
+
+  static final ThemeData darkThemeMode = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: AppPallete.backgroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppPallete.backgroundColor,
     ),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
     chipTheme: const ChipThemeData(
-      color: MaterialStatePropertyAll(
-        AppPallete.backgroundColor,
-      ),
+      color: MaterialStatePropertyAll<Color>(AppPallete.backgroundColor),
       side: BorderSide.none,
     ),
     inputDecorationTheme: InputDecorationTheme(

@@ -1,10 +1,10 @@
 class Constants {
-  static const List<String> topics = [
+  static const List<String> topics = <String>[
     'Technology',
     'Business',
     'Programming',
     'Entertainment',
   ];
 
-  static const noConnectionErrorMessage = 'Not connected to a network!';
+  static const String noConnectionErrorMessage = 'Not connected to a network!';
 }

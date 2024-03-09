@@ -1,62 +1,35 @@
-import 'package:blog_app/features/blog/domain/entities/blog.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class BlogModel extends Blog {
-  BlogModel({
-    required super.id,
-    required super.posterId,
-    required super.title,
-    required super.content,
-    required super.imageUrl,
-    required super.topics,
-    required super.updatedAt,
-    super.posterName,
-  });
+part 'blog_model.freezed.dart';
+part 'blog_model.g.dart';
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'poster_id': posterId,
-      'title': title,
-      'content': content,
-      'image_url': imageUrl,
-      'topics': topics,
-      'updated_at': updatedAt.toIso8601String(),
-    };
-  }
+/// An external function to convert the json to DateTime
+DateTime _dateFromJson(String? json) =>
+    json == null ? DateTime.now() : DateTime.parse(json);
 
-  factory BlogModel.fromJson(Map<String, dynamic> map) {
-    return BlogModel(
-      id: map['id'] as String,
-      posterId: map['poster_id'] as String,
-      title: map['title'] as String,
-      content: map['content'] as String,
-      imageUrl: map['image_url'] as String,
-      topics: List<String>.from(map['topics'] ?? []),
-      updatedAt: map['updated_at'] == null
-          ? DateTime.now()
-          : DateTime.parse(map['updated_at']),
-    );
-  }
+/// An external function to parse the poster name
+String? _posterNameFromJson(Map<String, dynamic>? json) =>
+    json?['profiles']['name'] as String?;
 
-  BlogModel copyWith({
-    String? id,
-    String? posterId,
-    String? title,
-    String? content,
-    String? imageUrl,
-    List<String>? topics,
-    DateTime? updatedAt,
+@Freezed(fromJson: false, toJson: false)
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
+class BlogModel with _$BlogModel {
+  const BlogModel._();
+
+  const factory BlogModel({
+    required String id,
+    required String posterId,
+    required String title,
+    required String content,
+    required String imageUrl,
+    @Default(<String>[]) List<String> topics,
+    @JsonKey(fromJson: _dateFromJson) required DateTime updatedAt,
+    @JsonKey(fromJson: _posterNameFromJson, includeToJson: false)
     String? posterName,
-  }) {
-    return BlogModel(
-      id: id ?? this.id,
-      posterId: posterId ?? this.posterId,
-      title: title ?? this.title,
-      content: content ?? this.content,
-      imageUrl: imageUrl ?? this.imageUrl,
-      topics: topics ?? this.topics,
-      updatedAt: updatedAt ?? this.updatedAt,
-      posterName: posterName ?? this.posterName,
-    );
-  }
+  }) = _BlogModel;
+
+  factory BlogModel.fromJson(Map<String, dynamic> json) =>
+      _$BlogModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BlogModelToJson(this);
 }

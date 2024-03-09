@@ -1,29 +1,16 @@
-import 'package:blog_app/core/common/entities/user.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class UserModel extends User {
-  UserModel({
-    required super.id,
-    required super.email,
-    required super.name,
-  });
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
 
-  factory UserModel.fromJson(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['id'] ?? '',
-      email: map['email'] ?? '',
-      name: map['name'] ?? '',
-    );
-  }
+@freezed
+class UserModel with _$UserModel {
+  const factory UserModel({
+    required String id,
+    required String email,
+    required String name,
+  }) = _UserModel;
 
-  UserModel copyWith({
-    String? id,
-    String? email,
-    String? name,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      name: name ?? this.name,
-    );
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }

@@ -1,20 +1,13 @@
-import 'package:blog_app/core/theme/app_pallete.dart';
-import 'package:blog_app/core/utils/calculate_reading_time.dart';
-import 'package:blog_app/core/utils/format_date.dart';
-import 'package:blog_app/features/blog/domain/entities/blog.dart';
+import '../../../../core/extensions/string_ext.dart';
+import '../../../../core/theme/app_pallete.dart';
+import '../../../../core/utils/format_date.dart';
+import '../../data/models/blog_model.dart';
 import 'package:flutter/material.dart';
 
 class BlogViewerPage extends StatelessWidget {
-  static route(Blog blog) => MaterialPageRoute(
-        builder: (context) => BlogViewerPage(
-          blog: blog,
-        ),
-      );
-  final Blog blog;
-  const BlogViewerPage({
-    super.key,
-    required this.blog,
-  });
+  final BlogModel blog;
+
+  const BlogViewerPage({super.key, required this.blog});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +19,7 @@ class BlogViewerPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   blog.title,
                   style: const TextStyle(
@@ -44,7 +37,7 @@ class BlogViewerPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '${formatDateBydMMMYYYY(blog.updatedAt)} . ${calculateReadingTime(blog.content)} min',
+                  '${formatDateBydMMMYYYY(blog.updatedAt)} . ${blog.content.calculateReadingTime()} min',
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: AppPallete.greyColor,
@@ -59,10 +52,7 @@ class BlogViewerPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   blog.content,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    height: 2,
-                  ),
+                  style: const TextStyle(fontSize: 16, height: 2),
                 )
               ],
             ),
