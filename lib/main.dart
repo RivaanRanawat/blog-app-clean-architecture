@@ -17,14 +17,9 @@ Future<void> main() async {
     url: AppSecrets.supabaseUrl,
     anonKey: AppSecrets.supabaseAnonKey,
   );
-  final ProviderContainer container = ProviderContainer(
-    overrides: <Override>[
-      supabaseProvider.overrideWithValue(supabase),
-    ],
-  );
   runApp(
-    UncontrolledProviderScope(
-      container: container,
+    ProviderScope(
+      overrides: <Override>[supabaseProvider.overrideWithValue(supabase)],
       child: const MyApp(),
     ),
   );
