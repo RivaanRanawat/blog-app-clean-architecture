@@ -1,9 +1,11 @@
-import 'package:blog_app/core/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/theme/app_pallete.dart';
 
 class AuthGradientButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
+
   const AuthGradientButton({
     super.key,
     required this.buttonText,
@@ -15,7 +17,7 @@ class AuthGradientButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
+          colors: <Color>[
             AppPallete.gradient1,
             AppPallete.gradient2,
             // AppPallete.gradient3,

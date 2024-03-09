@@ -1,15 +1,13 @@
-import 'package:blog_app/core/error/failures.dart';
-import 'package:blog_app/core/usecase/usecase.dart';
-import 'package:blog_app/core/common/entities/user.dart';
-import 'package:blog_app/features/auth/domain/repository/auth_repository.dart';
-import 'package:fpdart/fpdart.dart';
+import '../../../../core/typedefs/functional_typedefs.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../data/models/user_model.dart';
+import '../repository/auth_repository.dart';
 
-class CurrentUser implements UseCase<User, NoParams> {
+final class CurrentUser implements UseCase<UserModel, NoParams> {
   final AuthRepository authRepository;
-  CurrentUser(this.authRepository);
+
+  const CurrentUser(this.authRepository);
 
   @override
-  Future<Either<Failure, User>> call(NoParams params) async {
-    return await authRepository.currentUser();
-  }
+  FutureEither<UserModel> call(NoParams params) => authRepository.currentUser();
 }

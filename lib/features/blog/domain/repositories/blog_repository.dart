@@ -1,11 +1,12 @@
-import 'dart:io';
+import 'dart:io' show File;
 
-import 'package:blog_app/core/error/failures.dart';
-import 'package:blog_app/features/blog/domain/entities/blog.dart';
-import 'package:fpdart/fpdart.dart';
+import '../../../../core/typedefs/functional_typedefs.dart';
+
+import '../../data/models/blog_model.dart';
 
 abstract interface class BlogRepository {
-  Future<Either<Failure, Blog>> uploadBlog({
+  /// Uploads a blog to the remote server
+  FutureEither<BlogModel> uploadBlog({
     required File image,
     required String title,
     required String content,
@@ -13,5 +14,6 @@ abstract interface class BlogRepository {
     required List<String> topics,
   });
 
-  Future<Either<Failure, List<Blog>>> getAllBlogs();
+  /// Gets all the blogs from the remote server
+  FutureEither<List<BlogModel>> getAllBlogs();
 }

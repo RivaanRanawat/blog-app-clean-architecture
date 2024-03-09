@@ -1,15 +1,15 @@
-import 'package:blog_app/core/error/failures.dart';
-import 'package:blog_app/core/usecase/usecase.dart';
-import 'package:blog_app/features/blog/domain/entities/blog.dart';
-import 'package:blog_app/features/blog/domain/repositories/blog_repository.dart';
-import 'package:fpdart/fpdart.dart';
+import '../../../../core/typedefs/functional_typedefs.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../data/models/blog_model.dart';
+import '../repositories/blog_repository.dart';
 
-class GetAllBlogs implements UseCase<List<Blog>, NoParams> {
+class GetAllBlogs implements UseCase<List<BlogModel>, NoParams> {
   final BlogRepository blogRepository;
-  GetAllBlogs(this.blogRepository);
+
+  const GetAllBlogs(this.blogRepository);
 
   @override
-  Future<Either<Failure, List<Blog>>> call(NoParams params) async {
-    return await blogRepository.getAllBlogs();
+  FutureEither<List<BlogModel>> call(NoParams params) {
+    return blogRepository.getAllBlogs();
   }
 }

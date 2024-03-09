@@ -1,16 +1,21 @@
-import 'package:blog_app/core/error/failures.dart';
-import 'package:blog_app/core/common/entities/user.dart';
-import 'package:fpdart/fpdart.dart';
+import '../../../../core/typedefs/functional_typedefs.dart';
+
+import '../../data/models/user_model.dart';
 
 abstract interface class AuthRepository {
-  Future<Either<Failure, User>> signUpWithEmailPassword({
+  /// Create a new user with email and password
+  FutureEither<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
   });
-  Future<Either<Failure, User>> loginWithEmailPassword({
+
+  /// Login with email and password
+  FutureEither<UserModel> loginWithEmailPassword({
     required String email,
     required String password,
   });
-  Future<Either<Failure, User>> currentUser();
+
+  /// Get the current user
+  FutureEither<UserModel> currentUser();
 }

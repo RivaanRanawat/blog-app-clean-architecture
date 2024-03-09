@@ -1,29 +1,23 @@
-import 'package:blog_app/core/common/entities/user.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class UserModel extends User {
-  UserModel({
-    required super.id,
-    required super.email,
-    required super.name,
-  });
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
 
-  factory UserModel.fromJson(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['id'] ?? '',
-      email: map['email'] ?? '',
-      name: map['name'] ?? '',
-    );
-  }
+/// Parse the user_metadata from the json and return the name
+String _nameReader(Map<dynamic, dynamic> json, String key) {
+  if (json.containsKey(key)) return json[key]['name'] as String;
+  return json['name'] as String;
+}
 
-  UserModel copyWith({
-    String? id,
+@freezed
+class UserModel with _$UserModel {
+  const factory UserModel({
+    required String id,
     String? email,
-    String? name,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      name: name ?? this.name,
-    );
-  }
+    @JsonKey(name: 'user_metadata', readValue: _nameReader)
+    required String name,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }

@@ -1,71 +1,55 @@
-import 'package:blog_app/core/common/widgets/loader.dart';
-import 'package:blog_app/core/theme/app_pallete.dart';
-import 'package:blog_app/core/utils/show_snackbar.dart';
-import 'package:blog_app/features/blog/presentation/bloc/blog_bloc.dart';
-import 'package:blog_app/features/blog/presentation/pages/add_new_blog_page.dart';
-import 'package:blog_app/features/blog/presentation/widgets/blog_card.dart';
+import '../../../../core/common/widgets/loader.dart';
+import '../../../../core/extensions/context_ext.dart';
+import '../../../../core/theme/app_pallete.dart';
+import '../notifiers/blog_notifier.dart';
+import 'add_new_blog_page.dart';
+import '../widgets/blog_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BlogPage extends StatefulWidget {
-  static route() => MaterialPageRoute(
-        builder: (context) => const BlogPage(),
-      );
+import '../../data/models/blog_model.dart';
+
+class BlogPage extends StatelessWidget {
   const BlogPage({super.key});
-
-  @override
-  State<BlogPage> createState() => _BlogPageState();
-}
-
-class _BlogPageState extends State<BlogPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<BlogBloc>().add(BlogFetchAllBlogs());
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Blog App'),
-        actions: [
+        actions: <IconButton>[
           IconButton(
-            onPressed: () {
-              Navigator.push(context, AddNewBlogPage.route());
-            },
-            icon: const Icon(
-              CupertinoIcons.add_circled,
-            ),
+            onPressed: () => context.push(const AddNewBlogPage()),
+            icon: const Icon(CupertinoIcons.add_circled),
           ),
         ],
       ),
-      body: BlocConsumer<BlogBloc, BlogState>(
-        listener: (context, state) {
-          if (state is BlogFailure) {
-            showSnackBar(context, state.error);
-          }
-        },
-        builder: (context, state) {
-          if (state is BlogLoading) {
-            return const Loader();
-          }
-          if (state is BlogsDisplaySuccess) {
-            return ListView.builder(
-              itemCount: state.blogs.length,
-              itemBuilder: (context, index) {
-                final blog = state.blogs[index];
-                return BlogCard(
-                  blog: blog,
-                  color: index % 2 == 0
-                      ? AppPallete.gradient1
-                      : AppPallete.gradient2,
-                );
-              },
-            );
-          }
-          return const SizedBox();
+      body: Consumer(
+        child: const Loader(),
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          ref.listen(blogNotifierProvider, (_, BlogState next) {
+            if (next is BlogFailure) {
+              context.showSnackBar(next.error);
+            }
+          });
+          return switch (ref.watch(blogNotifierProvider)) {
+            BlogLoading() => child!,
+            BlogsDisplaySuccess(:final List<BlogModel> blogs) =>
+              ListView.builder(
+                itemCount: blogs.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final BlogModel blog = blogs[index];
+                  return BlogCard(
+                    blog: blog,
+                    color: index % 2 == 0
+                        ? AppPallete.gradient1
+                        : AppPallete.gradient2,
+                  );
+                },
+              ),
+            _ => const SizedBox()
+          };
         },
       ),
     );

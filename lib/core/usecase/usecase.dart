@@ -1,8 +1,11 @@
-import 'package:blog_app/core/error/failures.dart';
-import 'package:fpdart/fpdart.dart';
+import '../typedefs/functional_typedefs.dart';
 
-abstract interface class UseCase<SuccessType, Params> {
-  Future<Either<Failure, SuccessType>> call(Params params);
+abstract interface class UseCase<SuccessType, T extends Params> {
+  FutureEither<SuccessType> call(T params);
 }
 
-class NoParams {}
+abstract base class Params {
+  const Params();
+}
+
+final class NoParams extends Params {}
