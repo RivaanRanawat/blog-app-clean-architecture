@@ -11,6 +11,8 @@ import 'core/secrets/app_secrets.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.defaultDirectory = (await getApplicationDocumentsDirectory()).path;
+
+  // TODO: Modify the secrets accordingly
   final Supabase supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
     anonKey: AppSecrets.supabaseAnonKey,
